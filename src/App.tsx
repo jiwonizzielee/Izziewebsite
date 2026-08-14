@@ -61,7 +61,7 @@ const EXPERIENCE = [
   {
     org: 'Google',
     role: 'Software Engineer Intern · Project Lead',
-    period: 'Jul – Aug 2026',
+    period: 'Jul. 2026 – Aug. 2026',
     bullets: [
       'Architected a multi-agent AI travel booking assistant with 4 specialized agents across 5+ live APIs for autonomous booking',
       'Led product strategy for a 5-engineer team with 6-phase roadmap; positioned prototype for integration with Delta & American Airlines',
@@ -70,7 +70,7 @@ const EXPERIENCE = [
   {
     org: 'Cognition & Visualization Lab, Emory University',
     role: 'Undergraduate Researcher',
-    period: 'Apr 2026 – Present',
+    period: 'Apr. 2026 – Present',
     bullets: [
       'Designed a bias study spanning 960+ race, gender, and academic-profile combinations across 9,600+ LLM recommendation letters.',
       'Built a Python generation and analysis pipeline to quantify run-to-run and cross-group racial and gender bias.',
@@ -79,16 +79,17 @@ const EXPERIENCE = [
   {
     org: 'Computational Vision & Convergence Lab, CUNY',
     role: 'Research Assistant & Data Team Lead',
-    period: 'Jun 2024 – Jan 2026',
+    period: 'Jun. 2024 – Jan. 2026',
     bullets: [
       'Led user research with 15+ blind and low-vision users to improve navigation features in BuddyWalk and Virtual Cane.',
-      'Led data collection and analysis contributing to research published at IEEE/CVF WACV 2025.',
+      'Led data collection & analysis on side materials across 50+ blocks contributing to research published at IEEE/CVF WACV 2025.',
     ],
   },
   {
     org: 'Sightshare',
+    url: 'https://sightshare.org',
     role: 'Co-Founder & CEO',
-    period: 'Aug 2023 – Present',
+    period: 'Aug. 2023 – Present',
     bullets: [
       'Directed communications, fundraising, and operations across 10+ chapters in 5 states, collaborating with 35+ schools.',
       'Raised $5,000+ for eye-care initiatives in Ghana and Morocco, supporting 150+ patients through screenings and surgical care.',
@@ -168,10 +169,10 @@ export default function App() {
       {/* ── Hero ── */}
       <section className="max-w-5xl mx-auto px-6 pt-32 pb-24 relative overflow-hidden">
         {/* Lime slices — clustered top-right */}
-        <LimeSlice size={340} rotation={-20} opacity={0.65} blur={1} style={{ top: -60, right: -50 }} />
-        <LimeSlice size={190} rotation={18} opacity={0.55} blur={0.5} style={{ top: 30, right: 200 }} />
-        <LimeSlice size={120} rotation={42} opacity={0.45} blur={0} style={{ top: 240, right: 45 }} />
-        <LimeSlice size={110} rotation={-12} opacity={0.4} blur={0} style={{ top: 100, right: 340 }} />
+        <LimeSlice size={340} rotation={-20} opacity={0.65} blur={1} style={{ top: -22, right: -50 }} />
+        <LimeSlice size={190} rotation={18} opacity={0.55} blur={0.5} style={{ top: 68, right: 200 }} />
+        <LimeSlice size={120} rotation={42} opacity={0.45} blur={0} style={{ top: 278, right: 45 }} />
+        <LimeSlice size={110} rotation={-12} opacity={0.4} blur={0} style={{ top: 138, right: 340 }} />
 
         <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-12 items-center">
           <div>
@@ -294,7 +295,7 @@ export default function App() {
 
       {/* ── Experience ── */}
       <section id="experience" className="max-w-5xl mx-auto px-6 py-24">
-        <img src="/src/imports/experience.png" alt="Experience" style={{ height: '36px', width: 'auto', objectFit: 'contain', marginBottom: '3rem' }} />
+        <img src="/src/imports/experience.png" alt="Experience" style={{ height: '42px', width: 'auto', objectFit: 'contain', marginBottom: '3rem' }} />
 
         <div className="relative">
           {/* Vertical line */}
@@ -317,7 +318,13 @@ export default function App() {
                 {/* Header */}
                 <div className="flex items-baseline justify-between gap-4 mb-1">
                   <span className="font-semibold text-base" style={{ color: '#111' }}>
-                    {e.org}
+                    {e.url ? (
+                      <a href={e.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }} className="hover:underline">
+                        {e.org}
+                      </a>
+                    ) : (
+                      e.org
+                    )}
                   </span>
                   <span className="text-xs flex-shrink-0" style={{ color: '#666' }}>{e.period}</span>
                 </div>
