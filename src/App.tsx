@@ -175,9 +175,11 @@ export default function App() {
 
         <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-12 items-center">
           <div>
-            <p className="text-sm mb-0" style={{ color: '#6aad2c' }}>
-              Cornell University · Information Science · Class of 2029
-            </p>
+            <img
+              src="/src/imports/banner.png"
+              alt="Cornell University · Information Science · Class of 2029"
+              style={{ height: '33px', width: 'auto', objectFit: 'contain', marginBottom: '0' }}
+            />
             <div className="mb-1" style={{ marginTop: '-1.5rem' }}>
               <img
                 src="/src/imports/D42D841E-E1B6-4A2F-98DC-D82DC8252DFB.png"
@@ -279,7 +281,7 @@ export default function App() {
               <p className="text-xs tracking-widest uppercase mb-4" style={{ color: '#999' }}>Skills</p>
               <div className="flex flex-wrap gap-2">
                 {SKILLS.map((s) => (
-                  <span key={s} className="text-xs px-2.5 py-1 rounded-sm" style={{ background: 'rgba(194,230,80,0.25)', color: '#3a6e18', border: '1px solid rgba(106,173,44,0.3)' }}>
+                  <span key={s} className="text-xs px-2.5 py-1 rounded-sm" style={{ background: '#fff', color: '#6aad2c', border: '1px solid #6aad2c' }}>
                     {s}
                   </span>
                 ))}
@@ -368,7 +370,7 @@ export default function App() {
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {p.tags.map((t) => (
-                        <span key={t} className="text-xs px-2 py-0.5 rounded-sm" style={{ background: '#f4fce8', color: '#3a6e18', border: '1px solid rgba(106,173,44,0.18)' }}>
+                        <span key={t} className="text-xs px-2 py-0.5 rounded-sm" style={{ background: '#fff', color: '#6aad2c', border: '1px solid #6aad2c' }}>
                           {t}
                         </span>
                       ))}
