@@ -1,5 +1,25 @@
 import { useState, useEffect } from 'react'
 
+// Project images
+import brainTumorImg from './imports/extraordinary-vintage-brain-icon-pink-isolated-transparent-background-genuine-png.png'
+import nursingImg from './imports/nurse-3d-icon-png-download-4731208.png'
+import investAtlantaImg from './imports/pngtree-3d-map-location-icon-isolate-on-transparent-background-png-image_14200026.png'
+import crashlyImg from './imports/Screenshot_2026-08-08_at_11.55.09_PM-removebg-preview.png'
+import kineticKinImg from './imports/Screenshot_2026-08-09_at_12.00.19_AM-removebg-preview.png'
+import sunbrellaImg from './imports/AA155D25-C1F0-453C-9D39-889DC075EB2E.png'
+
+// Website images
+import limeSliceImg from './imports/nhakhoaitay___nhakhoaitay__on_Threads-removebg-preview.png'
+import navLogoImg from './imports/E61664FF-A6CD-425B-8E57-429A235FE6A7-1.png'
+import bannerImg from './imports/banner.png'
+import nameImg from './imports/D42D841E-E1B6-4A2F-98DC-D82DC8252DFB.png'
+import profileImg from './imports/Screenshot_2026-08-08_at_8.19.17_PM-1.png'
+import googleImg from './imports/Screenshot_2026-08-08_at_8.58.16_PM.png'
+import aboutImg from './imports/about.png'
+import experienceImg from './imports/experience.png'
+import projectsTitleImg from './imports/2994a3fd7b8cb059eb07566926e81f59da846bcd83f7ac42d8f77b657ec791cf.png'
+import contactImg from './imports/52be1ef7d7d21c7ced00bfa7c2a1d81b004093c6b4417a2fcd6c011d8e962e30.png'
+
 const PROJECTS = [
   {
     title: 'Brain Tumor Detection',
@@ -8,7 +28,7 @@ const PROJECTS = [
     desc: 'Detects visual indications of tumors from brain MRI scans using convolutional neural networks with image preprocessing and augmentation.',
     tags: ['Python', 'Convolutional Neural Network', 'Image Augmentation'],
     link: 'https://github.com/SahilMulki/brain-tumor-detection',
-    image: '/src/imports/extraordinary-vintage-brain-icon-pink-isolated-transparent-background-genuine-png.png',
+    image: brainTumorImg,
   },
   {
     title: 'GA Nursing Workforce Map',
@@ -17,7 +37,7 @@ const PROJECTS = [
     desc: "Public interactive geospatial map of Georgia's NP workforce across all 159 counties from 15,000+ records for the Emory School of Nursing.",
     tags: ['Python', 'ArcGIS', 'R', 'API'],
     link: 'https://github.com/ksduong/GA-NP-Workforce-Map',
-    image: '/src/imports/nurse-3d-icon-png-download-4731208.png',
+    image: nursingImg,
   },
   {
     title: 'Invest Atlanta',
@@ -26,7 +46,7 @@ const PROJECTS = [
     desc: 'Geospatial dashboard estimating fresh food access gaps across 20K+ records to guide city investment toward the 2030 target.',
     tags: ['Python', 'R', 'GeoJSON', 'Tableau', 'API'],
     link: 'https://github.com/savannah-drake/fresh-food-access-dashboard',
-    image: '/src/imports/pngtree-3d-map-location-icon-isolate-on-transparent-background-png-image_14200026.png',
+    image: investAtlantaImg,
   },
   {
     title: 'Crashly',
@@ -35,7 +55,7 @@ const PROJECTS = [
     desc: 'An AI agent that finds you trusted, affordable lodging through your network with a multi-stage search pipeline.',
     tags: ['React Native', 'TypeScript', 'Supabase', 'API'],
     link: 'https://github.com/KevinJuwangLee/crashly',
-    image: '/src/imports/Screenshot_2026-08-08_at_11.55.09_PM-removebg-preview.png',
+    image: crashlyImg,
   },
   {
     title: 'KineticKin',
@@ -44,7 +64,7 @@ const PROJECTS = [
     desc: 'TEDxHarvardSquare hackathon project — a multi-agent energy intelligence platform for neighborhood microgrids.',
     tags: ['Python', 'TypeScript', 'React', 'Vite', 'API'],
     link: 'https://github.com/jiwonizzielee/kinetickin',
-    image: '/src/imports/Screenshot_2026-08-09_at_12.00.19_AM-removebg-preview.png',
+    image: kineticKinImg,
   },
   {
     title: 'Sunbrella',
@@ -53,7 +73,7 @@ const PROJECTS = [
     desc: 'Emory Hacks project — a tool for finding cooler, shaded walking routes using real-time sun position and Google Maps routing.',
     tags: ['HTML/CSS', 'JavaScript', 'API', 'ElevenLabs'],
     link: 'https://github.com/gracexf/Sunbrella',
-    image: '/src/imports/AA155D25-C1F0-453C-9D39-889DC075EB2E.png',
+    image: sunbrellaImg,
   },
 ]
 
@@ -102,7 +122,7 @@ const SKILLS = ['Python', 'JavaScript', 'TypeScript', 'R', 'HTML', 'CSS', 'React
 function LimeSlice({ size, style, rotation = 0, opacity = 1, blur = 0 }: { size: number; style?: React.CSSProperties; rotation?: number; opacity?: number; blur?: number }) {
   return (
     <img
-      src="/src/imports/nhakhoaitay___nhakhoaitay__on_Threads-removebg-preview.png"
+      src={limeSliceImg}
       alt=""
       style={{
         width: size,
@@ -144,7 +164,7 @@ export default function App() {
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <a href="#" className="flex items-center">
             <img
-              src="/src/imports/E61664FF-A6CD-425B-8E57-429A235FE6A7-1.png"
+              src={navLogoImg}
               alt="Izzie Lee"
               style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
             />
@@ -177,13 +197,13 @@ export default function App() {
         <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-12 items-center">
           <div>
             <img
-              src="/src/imports/banner.png"
+              src={bannerImg}
               alt="Cornell University · Information Science · Class of 2029"
               style={{ height: '33px', width: 'auto', objectFit: 'contain', marginBottom: '0' }}
             />
             <div className="mb-1" style={{ marginTop: '-1.5rem' }}>
               <img
-                src="/src/imports/D42D841E-E1B6-4A2F-98DC-D82DC8252DFB.png"
+                src={nameImg}
                 alt="Izzie Lee"
                 style={{ height: 'clamp(6rem, 18vw, 14rem)', width: 'auto', objectFit: 'contain', marginLeft: '-4px' }}
               />
@@ -223,7 +243,7 @@ export default function App() {
           {/* Hero photo */}
           <div className="relative flex-shrink-0 hidden md:block">
             <img
-              src="/src/imports/Screenshot_2026-08-08_at_8.19.17_PM-1.png"
+              src={profileImg}
               alt="Izzie Lee"
               style={{
                 width: '310px',
@@ -249,7 +269,7 @@ export default function App() {
           {/* Photo */}
           <div className="relative" style={{ overflow: 'hidden', borderRadius: '4px' }}>
             <img
-              src="/src/imports/Screenshot_2026-08-08_at_8.58.16_PM.png"
+              src={googleImg}
               alt="Izzie Lee at Google"
               className="w-full object-cover"
               style={{
@@ -267,7 +287,7 @@ export default function App() {
 
           {/* Text */}
           <div className="pt-2">
-            <img src="/src/imports/about.png" alt="About" style={{ height: '24px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }} />
+            <img src={aboutImg} alt="About" style={{ height: '24px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }} />
             <div className="space-y-4 text-base leading-relaxed" style={{ color: '#444' }}>
               <p>My work spans <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>agentic AI</u>, <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>data analytics</u>, <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>product management</u>, and <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>human-centered interaction</u>.</p>
               <p>
@@ -295,7 +315,7 @@ export default function App() {
 
       {/* ── Experience ── */}
       <section id="experience" className="max-w-5xl mx-auto px-6 py-24">
-        <img src="/src/imports/experience.png" alt="Experience" style={{ height: '42px', width: 'auto', objectFit: 'contain', marginBottom: '3rem' }} />
+        <img src={experienceImg} alt="Experience" style={{ height: '42px', width: 'auto', objectFit: 'contain', marginBottom: '3rem' }} />
 
         <div className="relative">
           {/* Vertical line */}
@@ -348,7 +368,7 @@ export default function App() {
       {/* ── Work ── */}
       <section id="work" className="border-t" style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
         <div className="max-w-5xl mx-auto px-6 py-24">
-          <img src="/src/imports/2994a3fd7b8cb059eb07566926e81f59da846bcd83f7ac42d8f77b657ec791cf.png" alt="Selected Projects" style={{ height: '36px', width: 'auto', objectFit: 'contain', marginBottom: '2rem' }} />
+          <img src={projectsTitleImg} alt="Selected Projects" style={{ height: '36px', width: 'auto', objectFit: 'contain', marginBottom: '2rem' }} />
 
           <div className="space-y-0">
             {PROJECTS.map((p, i) => (
@@ -422,7 +442,7 @@ export default function App() {
         <div className="grid md:grid-cols-[1fr_auto] gap-12 items-end">
           <div>
             <img
-              src="/src/imports/52be1ef7d7d21c7ced00bfa7c2a1d81b004093c6b4417a2fcd6c011d8e962e30.png"
+              src={contactImg}
               alt="Contact"
               style={{ height: '30px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }}
             />
