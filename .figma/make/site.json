@@ -1,0 +1,11 @@
+{
+  "title": "Izzie's personal website",
+  "description": "Create a stunning personal website with a key lime pie color palette, featuring a clean, minimalistic design that showcases your content elegantly.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
