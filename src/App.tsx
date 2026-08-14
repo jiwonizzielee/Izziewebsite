@@ -264,7 +264,7 @@ export default function App() {
 
           {/* Text */}
           <div className="pt-2">
-            <p className="text-xs tracking-widest uppercase mb-6" style={{ color: '#6aad2c' }}>About</p>
+            <img src="/src/imports/about.png" alt="About" style={{ height: '24px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }} />
             <div className="space-y-4 text-base leading-relaxed" style={{ color: '#444' }}>
               <p>My work spans <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>agentic AI</u>, <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>data analytics</u>, <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>product management</u>, and <u style={{ textUnderlineOffset: '3px', textDecorationColor: '#6aad2c' }}>human-centered interaction</u>.</p>
               <p>
@@ -292,7 +292,7 @@ export default function App() {
 
       {/* ── Experience ── */}
       <section id="experience" className="max-w-5xl mx-auto px-6 py-24">
-        <p className="text-xs tracking-widest uppercase mb-12" style={{ color: '#6aad2c' }}>Experience</p>
+        <img src="/src/imports/experience.png" alt="Experience" style={{ height: '36px', width: 'auto', objectFit: 'contain', marginBottom: '3rem' }} />
 
         <div className="relative">
           {/* Vertical line */}
@@ -317,7 +317,7 @@ export default function App() {
                   <span className="font-semibold text-base" style={{ color: '#111' }}>
                     {e.org}
                   </span>
-                  <span className="text-xs flex-shrink-0" style={{ color: '#bbb' }}>{e.period}</span>
+                  <span className="text-xs flex-shrink-0" style={{ color: '#666' }}>{e.period}</span>
                 </div>
                 <p className="text-sm mb-4" style={{ color: '#6aad2c' }}>{e.role}</p>
 
@@ -339,7 +339,7 @@ export default function App() {
       {/* ── Work ── */}
       <section id="work" className="border-t" style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
         <div className="max-w-5xl mx-auto px-6 py-24">
-          <img src="/src/imports/2994a3fd7b8cb059eb07566926e81f59da846bcd83f7ac42d8f77b657ec791cf.png" alt="Selected Projects" style={{ height: '36px', width: 'auto', objectFit: 'contain', marginBottom: '3rem' }} />
+          <img src="/src/imports/2994a3fd7b8cb059eb07566926e81f59da846bcd83f7ac42d8f77b657ec791cf.png" alt="Selected Projects" style={{ height: '36px', width: 'auto', objectFit: 'contain', marginBottom: '2rem' }} />
 
           <div className="space-y-0">
             {PROJECTS.map((p, i) => (
@@ -415,7 +415,7 @@ export default function App() {
             <img
               src="/src/imports/52be1ef7d7d21c7ced00bfa7c2a1d81b004093c6b4417a2fcd6c011d8e962e30.png"
               alt="Contact"
-              style={{ height: '24px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }}
+              style={{ height: '30px', width: 'auto', objectFit: 'contain', marginBottom: '1.5rem' }}
             />
             <h2
               className="font-light leading-tight mb-6"
