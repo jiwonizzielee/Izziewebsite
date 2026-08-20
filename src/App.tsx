@@ -453,7 +453,7 @@ export default function App() {
               Let's <span style={{ color: '#6aad2c' }}>connect!</span>
             </h2>
             <p className="text-base leading-relaxed mb-8" style={{ color: '#666', maxWidth: '420px' }}>
-              Based in New York and open to relocation during academic breaks. I'm interested in opportunities across data engineering, machine learning, product management, and UX research! Happy to chat anytime.
+              Based in New York and open to relocation during academic breaks. I'm interested in opportunities across software development, data engineering, product management, and UX research. Happy to chat anytime!
             </p>
             <div className="flex flex-col gap-3 mt-12">
               <a
