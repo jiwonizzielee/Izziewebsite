@@ -19,6 +19,14 @@ import aboutImg from './imports/about.png'
 import experienceImg from './imports/experience.png'
 import projectsTitleImg from './imports/2994a3fd7b8cb059eb07566926e81f59da846bcd83f7ac42d8f77b657ec791cf.png'
 import contactImg from './imports/52be1ef7d7d21c7ced00bfa7c2a1d81b004093c6b4417a2fcd6c011d8e962e30.png'
+import awardsImg from './imports/awards.png'
+import googleLogoImg from './imports/google.svg.png'
+import emoryLogoImg from './imports/emory_logo.png'
+import cunyLogoImg from './imports/cuny_logo.png'
+import sightshareLogoImg from './imports/sightsharelogo.png'
+import medalImg from './imports/medal.png'
+import secondPlaceImg from './imports/secondplace.png'
+import bronzeImg from './imports/bronze.png'
 
 const PROJECTS = [
   {
@@ -77,9 +85,17 @@ const PROJECTS = [
   },
 ]
 
+const AWARDS = [
+  { title: 'NYC Hackathon: Shopify Track', place: '2nd Place', date: 'Aug. 2026' },
+  { title: 'Greentown Labs x TEDxHarvard Square Climate AI Hackathon', place: '3rd Place', date: 'May. 2026' },
+  { title: 'AI.DataLab', place: 'Best Project Award', date: 'Apr. 2026' },
+  { title: 'Emory University Venture Studio', place: '3rd Place', date: 'Apr. 2026' },
+]
+
 const EXPERIENCE = [
   {
     org: 'Google',
+    logo: googleLogoImg,
     role: 'Software Engineer Intern · Project Lead',
     period: 'Jul. 2026 – Aug. 2026',
     bullets: [
@@ -89,6 +105,7 @@ const EXPERIENCE = [
   },
   {
     org: 'Cognition & Visualization Lab, Emory University',
+    logo: emoryLogoImg,
     role: 'Undergraduate Researcher',
     period: 'Apr. 2026 – Present',
     bullets: [
@@ -98,6 +115,7 @@ const EXPERIENCE = [
   },
   {
     org: 'Computational Vision & Convergence Lab, CUNY',
+    logo: cunyLogoImg,
     role: 'Research Assistant & Data Team Lead',
     period: 'Jun. 2024 – Jan. 2026',
     bullets: [
@@ -107,6 +125,7 @@ const EXPERIENCE = [
   },
   {
     org: 'Sightshare',
+    logo: sightshareLogoImg,
     url: 'https://sightshare.org',
     role: 'Co-Founder & CEO',
     period: 'Aug. 2023 – Present',
@@ -170,7 +189,7 @@ export default function App() {
             />
           </a>
           <div className="flex items-center gap-8">
-            {['Experience', 'Work', 'Contact'].map((l) => (
+            {['Experience', 'Work', 'Awards', 'Contact'].map((l) => (
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
@@ -329,10 +348,19 @@ export default function App() {
               <div key={e.org} className="relative pl-10 pb-12">
                 {/* Circle node */}
                 <div className="absolute" style={{ left: 0, top: '6px' }}>
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ border: '2px solid #6aad2c', background: '#fff' }}
-                  />
+                  {e.logo ? (
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden"
+                      style={{ border: '2px solid #6aad2c', background: '#fff', marginLeft: '-8px', marginTop: '-8px' }}
+                    >
+                      <img src={e.logo} alt={e.org} style={{ width: e.org.includes('Emory') ? '21px' : e.org.includes('Sightshare') ? '30px' : '18px', height: e.org.includes('Emory') ? '21px' : e.org.includes('Sightshare') ? '30px' : '18px', objectFit: 'contain', position: 'relative', top: e.org.includes('Emory') ? '2px' : 0 }} />
+                    </div>
+                  ) : (
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ border: '2px solid #6aad2c', background: '#fff' }}
+                    />
+                  )}
                 </div>
 
                 {/* Header */}
@@ -432,13 +460,56 @@ export default function App() {
                 </div>
               </a>
             ))}
-            <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Awards & Recognition ── */}
+      <section id="awards" className="border-t" style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+        <div className="max-w-5xl mx-auto px-6 py-24">
+          <img src={awardsImg} alt="Awards & Recognition" style={{ height: '70px', width: 'auto', objectFit: 'contain', marginBottom: 0 }} />
+
+          <div className="space-y-0">
+            {AWARDS.map((a, i) => (
+              <div
+                key={a.title}
+                className="py-6"
+                style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}
+              >
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-xs w-8 flex-shrink-0" style={{ color: '#ccc' }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="text-base font-medium" style={{ color: '#111' }}>
+                      {a.title}
+                    </h3>
+                    {a.place && (
+                      <span className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: '#6aad2c', position: 'relative', top: '10px' }}>
+                        {a.title === 'AI.DataLab' && (
+                          <img src={medalImg} alt="" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+                        )}
+                        {a.place === '2nd Place' && (
+                          <img src={secondPlaceImg} alt="" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+                        )}
+                        {a.place === '3rd Place' && (
+                          <img src={bronzeImg} alt="" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+                        )}
+                        {a.place}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-xs flex-shrink-0" style={{ color: '#666' }}>{a.date}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── Contact ── */}
-      <section id="contact" className="max-w-5xl mx-auto px-6 py-16">
+      <section id="contact" className="border-t" style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+        <div className="max-w-5xl mx-auto px-6 py-24">
         <div className="grid md:grid-cols-[1fr_auto] gap-12 items-end">
           <div>
             <img
@@ -492,6 +563,7 @@ export default function App() {
             <LimeSlice size={100} rotation={-30} opacity={0.55} blur={0} style={{ bottom: 0, left: -20 }} />
             <LimeSlice size={70} rotation={60} opacity={0.45} blur={0} style={{ top: 80, right: 130 }} />
           </div>
+        </div>
         </div>
       </section>
 
