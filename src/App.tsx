@@ -228,7 +228,7 @@ export default function App() {
               />
             </div>
             <p className="text-xl leading-relaxed mb-10" style={{ color: '#555', maxWidth: '460px' }}>
-              Hi, I'm Izzie! I study Information Science at Cornell, focusing on data science with a minor in computer science. I love building at the intersection of AI, human-centered technology, and product management to create experiences people actually want to use.
+              Hi, I'm Izzie! I study Information Science at Cornell, focusing on data science with a minor in computer science. I love building at the intersection of software development, human-centered technology, and product management to create experiences people actually want to use.
             </p>
             <div className="flex items-center gap-6">
               <a
