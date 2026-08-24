@@ -130,7 +130,7 @@ const EXPERIENCE = [
     org: 'Sightshare',
     logo: sightshareLogoImg,
     url: 'https://sightshare.org',
-    role: 'Co-Founder & CEO',
+    role: 'Co-Founder · Chief Financial Officer (CEO, 2023–2026)',
     period: 'Aug. 2023 – Present',
     bullets: [
       'Directed communications, fundraising, and operations across 10+ chapters in 5 states, collaborating with 35+ schools.',
