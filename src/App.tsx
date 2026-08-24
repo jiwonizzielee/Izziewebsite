@@ -6,7 +6,6 @@ import nursingImg from './imports/nurse-3d-icon-png-download-4731208.png'
 import investAtlantaImg from './imports/pngtree-3d-map-location-icon-isolate-on-transparent-background-png-image_14200026.png'
 import crashlyImg from './imports/Screenshot_2026-08-08_at_11.55.09_PM-removebg-preview.png'
 import kineticKinImg from './imports/Screenshot_2026-08-09_at_12.00.19_AM-removebg-preview.png'
-import sunbrellaImg from './imports/AA155D25-C1F0-453C-9D39-889DC075EB2E.png'
 import sidewalkImg from './imports/sidewalk.png'
 
 // Website images
@@ -31,15 +30,6 @@ import bronzeImg from './imports/bronze.png'
 
 const PROJECTS = [
   {
-    title: 'Brain Tumor Detection',
-    category: 'Machine Learning',
-    year: '2025',
-    desc: 'Detects visual indications of tumors from brain MRI scans using convolutional neural networks with image preprocessing and augmentation.',
-    tags: ['Python', 'Convolutional Neural Network', 'Image Augmentation'],
-    link: 'https://github.com/SahilMulki/brain-tumor-detection',
-    image: brainTumorImg,
-  },
-  {
     title: 'Sidewalk',
     category: 'Full-Stack · Civic Tech',
     year: '2026',
@@ -50,15 +40,6 @@ const PROJECTS = [
     place: '2nd Place',
   },
   {
-    title: 'GA Nursing Workforce Map',
-    category: 'Data Visualization · Research',
-    year: '2025',
-    desc: "Public interactive geospatial map of Georgia's NP workforce across all 159 counties from 15,000+ records for the Emory School of Nursing.",
-    tags: ['Python', 'ArcGIS', 'R', 'API'],
-    link: 'https://github.com/ksduong/GA-NP-Workforce-Map',
-    image: nursingImg,
-  },
-  {
     title: 'Invest Atlanta',
     category: 'Data Analytics · GIS',
     year: '2026',
@@ -66,15 +47,25 @@ const PROJECTS = [
     tags: ['Python', 'R', 'GeoJSON', 'Tableau', 'API'],
     link: 'https://github.com/savannah-drake/fresh-food-access-dashboard',
     image: investAtlantaImg,
+    place: '1st Place',
   },
   {
-    title: 'Crashly',
-    category: 'Full-Stack · AI',
-    year: '2026',
-    desc: 'An AI agent that finds you trusted, affordable lodging through your network with a multi-stage search pipeline.',
-    tags: ['React Native', 'TypeScript', 'Supabase', 'API'],
-    link: 'https://github.com/KevinJuwangLee/crashly',
-    image: crashlyImg,
+    title: 'Brain Tumor Detection',
+    category: 'Machine Learning · Computer Vision',
+    year: '2025',
+    desc: 'Detects visual indications of tumors from brain MRI scans using convolutional neural networks with image preprocessing and augmentation.',
+    tags: ['Python', 'PyTorch', 'Convolutional Neural Network', 'Image Augmentation'],
+    link: 'https://github.com/SahilMulki/brain-tumor-detection',
+    image: brainTumorImg,
+  },
+  {
+    title: 'GA Nursing Workforce Map',
+    category: 'Data Visualization · Research',
+    year: '2025',
+    desc: "Public interactive geospatial map of Georgia's NP workforce across all 159 counties from 15,000+ records for the Emory School of Nursing.",
+    tags: ['Python', 'ArcGIS', 'R', 'API'],
+    link: 'https://github.com/ksduong/GA-NP-Workforce-Map',
+    image: nursingImg,
   },
   {
     title: 'KineticKin',
@@ -87,13 +78,13 @@ const PROJECTS = [
     place: '3rd Place',
   },
   {
-    title: 'Sunbrella',
-    category: 'Frontend · Maps',
+    title: 'Crashly',
+    category: 'Full-Stack · AI',
     year: '2026',
-    desc: 'Emory Hacks project — a tool for finding cooler, shaded walking routes using real-time sun position and Google Maps routing.',
-    tags: ['HTML/CSS', 'JavaScript', 'API', 'ElevenLabs'],
-    link: 'https://github.com/gracexf/Sunbrella',
-    image: sunbrellaImg,
+    desc: 'An AI agent that finds you trusted, affordable lodging through your network with a multi-stage search pipeline.',
+    tags: ['React Native', 'TypeScript', 'Supabase', 'API'],
+    link: 'https://github.com/KevinJuwangLee/crashly',
+    image: crashlyImg,
   },
 ]
 
@@ -430,9 +421,12 @@ export default function App() {
                       >
                         {p.title}
                       </h3>
-                      <span className="text-xs" style={{ color: '#bbb' }}>{p.category}</span>
+                      <span className="text-xs" style={{ color: '#bbb' }}>{p.category}{p.place ? ` · ${p.place}` : ''}</span>
                       {p.place && (
                         <span className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: '#6aad2c', position: 'relative', top: '10px' }}>
+                          {p.place === '1st Place' && (
+                            <img src={medalImg} alt="" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                          )}
                           {p.place === '2nd Place' && (
                             <img src={secondPlaceImg} alt="" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
                           )}
@@ -458,7 +452,7 @@ export default function App() {
                       className="relative flex-shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer"
                       onClick={e => { e.preventDefault(); if (p.link !== '#') window.open(p.link, '_blank') }}
                     >
-                      <img src={p.image} alt={p.title} style={{ width: p.title === 'Sunbrella' ? '96px' : '72px', height: p.title === 'Sunbrella' ? '96px' : '72px', objectFit: 'contain', marginLeft: p.title === 'Sunbrella' ? '6px' : '0' }} />
+                      <img src={p.image} alt={p.title} style={{ width: '72px', height: '72px', objectFit: 'contain' }} />
                       <span
                         className="absolute"
                         style={{
