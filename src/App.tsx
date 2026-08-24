@@ -7,6 +7,7 @@ import investAtlantaImg from './imports/pngtree-3d-map-location-icon-isolate-on-
 import crashlyImg from './imports/Screenshot_2026-08-08_at_11.55.09_PM-removebg-preview.png'
 import kineticKinImg from './imports/Screenshot_2026-08-09_at_12.00.19_AM-removebg-preview.png'
 import sunbrellaImg from './imports/AA155D25-C1F0-453C-9D39-889DC075EB2E.png'
+import sidewalkImg from './imports/sidewalk.png'
 
 // Website images
 import limeSliceImg from './imports/nhakhoaitay___nhakhoaitay__on_Threads-removebg-preview.png'
@@ -37,6 +38,16 @@ const PROJECTS = [
     tags: ['Python', 'Convolutional Neural Network', 'Image Augmentation'],
     link: 'https://github.com/SahilMulki/brain-tumor-detection',
     image: brainTumorImg,
+  },
+  {
+    title: 'Sidewalk',
+    category: 'Full-Stack · Civic Tech',
+    year: '2026',
+    desc: 'Simplifies NYC street vendor licensing, helps vendors find legal vending locations, and lets customers discover vendors and order ahead.',
+    tags: ['React', 'Tailwind CSS', 'Leaflet', 'Base44'],
+    link: 'https://github.com/yogendrarau/Sidewalk',
+    image: sidewalkImg,
+    place: '2nd Place',
   },
   {
     title: 'GA Nursing Workforce Map',
@@ -73,6 +84,7 @@ const PROJECTS = [
     tags: ['Python', 'TypeScript', 'React', 'Vite', 'API'],
     link: 'https://github.com/jiwonizzielee/kinetickin',
     image: kineticKinImg,
+    place: '3rd Place',
   },
   {
     title: 'Sunbrella',
@@ -419,6 +431,16 @@ export default function App() {
                         {p.title}
                       </h3>
                       <span className="text-xs" style={{ color: '#bbb' }}>{p.category}</span>
+                      {p.place && (
+                        <span className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: '#6aad2c', position: 'relative', top: '10px' }}>
+                          {p.place === '2nd Place' && (
+                            <img src={secondPlaceImg} alt="" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                          )}
+                          {p.place === '3rd Place' && (
+                            <img src={bronzeImg} alt="" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                          )}
+                        </span>
+                      )}
                     </div>
                     <p className="text-sm leading-relaxed mb-4" style={{ color: '#666', maxWidth: '520px' }}>
                       {p.desc}
