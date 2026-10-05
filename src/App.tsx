@@ -238,7 +238,7 @@ export default function App() {
                 Izzie Lee
               </h1>
               <p className="ui text-[15px] mt-5 mb-8" style={{ color: 'var(--muted)' }}>
-                Cornell University · Information Science · Class of 2029
+                Cornell University · Information Science
               </p>
               <p className="text-xl md:text-[22px] leading-[1.5] mb-10" style={{ color: 'var(--graham)', maxWidth: 520 }}>
                 I study Information Science at Cornell, focusing on data science with a minor in computer science. I love building at the intersection of software development, human-centered technology, and product management to create experiences people <span className="marker">actually</span> want to use.
@@ -294,16 +294,13 @@ export default function App() {
         <section id="about" className="relative" style={{ background: 'var(--custard)', borderTop: '1.5px solid var(--charcoal)', borderBottom: '1.5px solid var(--charcoal)' }}>
           <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-24 grid md:grid-cols-[0.85fr_1.2fr] gap-16 md:gap-20 items-start">
             <div className="relative max-w-[380px] mx-auto md:mx-0 w-full">
-              <div className="card p-3 pb-14" style={{ transform: 'rotate(-2.5deg)', background: '#fff' }}>
+              <div className="card p-3" style={{ transform: 'rotate(-2.5deg)', background: '#fff' }}>
                 <img
                   src={googleImg}
                   alt="Izzie Lee at Google"
                   className="w-full block"
                   style={{ height: 400, objectFit: 'cover', objectPosition: 'center top', borderRadius: 6 }}
                 />
-                <span className="hand text-[19px] absolute left-0 right-0 bottom-4 text-center" style={{ color: 'var(--graham)' }}>
-                  Google, Summer 2026
-                </span>
               </div>
               <Sticker src={limeSliceImg} size={64} rotate={22} style={{ left: -26, bottom: -20 }} />
             </div>
