@@ -1,43 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Geist:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
+/*
+  Key lime pie × Superr notebook style
+  - whipped-cream paper canvas, one marker accent (lime zest)
+  - toasted-graham ink for headlines, charcoal for borders
+  - outlined pill buttons, thin borders, whisper-light shadows
+*/
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+  --color-cream: var(--cream);
+  --color-custard: var(--custard);
+  --color-filling: var(--filling);
+  --color-zest: var(--zest);
+  --color-zest-deep: var(--zest-deep);
+  --color-graham: var(--graham);
+  --color-crust: var(--crust);
+  --color-charcoal: var(--charcoal);
   --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-border: var(--border);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-geist);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --card: rgba(255, 255, 255, 0.75);
-  --card-foreground: #1a1a1a;
-  --primary: #6aad2c;
-  --primary-foreground: #ffffff;
-  --secondary: #f2fce6;
-  --secondary-foreground: #2d4a14;
-  --muted: #f6faf0;
-  --muted-foreground: #6b7280;
-  --accent: #c2e650;
-  --accent-foreground: #1a1a1a;
-  --border: rgba(0, 0, 0, 0.08);
-  --ring: #6aad2c;
-  --radius: 0.75rem;
+  /* pie palette */
+  --cream: #fdfbf3;      /* whipped cream — page canvas */
+  --custard: #f5f4e1;    /* pale custard — secondary surface */
+  --filling: #e2ec9f;    /* key lime filling — contact band */
+  --zest: #5e9a12;       /* lime zest marker — captions, highlights (large text only) */
+  --zest-deep: #4d7c0f;  /* deep zest — small accent text, tags */
+  --graham: #3a2510;     /* toasted graham — headline ink */
+  --crust: #cf9a5c;      /* graham crust — footer strip */
+  --charcoal: #171717;   /* borders, body text */
+  --muted: #5f5a4e;      /* secondary text, warm grey */
+
+  --shadow-card: rgba(0, 0, 0, 0.06) 0px 2px 20px 0px;
+  --shadow-button: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
+
+  --font-fraunces: 'Fraunces', ui-serif, Georgia, serif;
+  --font-geist: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 * {
@@ -49,59 +50,219 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: 'Fraunces', serif;
+  background-color: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-fraunces);
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+::selection {
+  background: var(--filling);
+  color: var(--graham);
 }
 
-::-webkit-scrollbar-track {
+/* ── type ── */
+
+.display {
+  font-family: var(--font-fraunces);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+  font-weight: 600;
+  color: var(--graham);
+  letter-spacing: normal;
+}
+
+.section-title {
+  font-family: var(--font-fraunces);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+  font-weight: 600;
+  color: var(--graham);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.08;
+}
+
+.hand {
+  font-family: var(--font-fraunces);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--zest);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.ui {
+  font-family: var(--font-geist);
+  font-variation-settings: normal;
+}
+
+/* ── outlined pill button (never filled) ── */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-geist);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--charcoal);
+  background: var(--cream);
+  border: 1.5px solid var(--charcoal);
+  border-radius: 999px;
+  padding: 9px 22px;
+  box-shadow: var(--shadow-button);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  white-space: nowrap;
+}
+
+.pill:hover {
+  transform: translateY(-1px) rotate(-1deg);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 0px 0px;
+}
+
+.pill:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--zest-deep);
+  outline-offset: 3px;
+}
+
+/* ── tags ── */
+
+.tag {
+  font-family: var(--font-geist);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--zest-deep);
+  border: 1px solid var(--zest-deep);
+  border-radius: 999px;
+  padding: 3px 11px;
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(106, 173, 44, 0.3);
-  border-radius: 3px;
-  opacity: 0;
-  transition: opacity 0.2s;
+/* ── card ── */
+
+.card {
+  background: var(--cream);
+  border: 1.5px solid var(--charcoal);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
 }
 
-body:hover::-webkit-scrollbar-thumb {
-  opacity: 1;
+/* ── marker highlight: wobbly hand-drawn lime underline ── */
+
+.marker {
+  color: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5.5 C 15 2.5, 28 7, 42 4.5 S 70 2, 84 5 S 96 4, 99 3.5' fill='none' stroke='%235e9a12' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 0.42em;
+  background-position: 0 100%;
+  padding-bottom: 0.12em;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.05),
-    0 1px 4px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+/* ── hand-drawn lime scribble above the name; draws itself in on load ── */
+
+.name-scribble {
+  display: block;
+  width: clamp(150px, 20vw, 230px);
+  height: auto;
+  margin: 0 0 1.25rem 0.25rem;
+  overflow: visible;
+  transform: rotate(-3deg);
+  pointer-events: none;
 }
 
-.glass-dark {
-  background: rgba(28, 46, 14, 0.75);
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
-  border: 1px solid rgba(194, 230, 80, 0.2);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(194, 230, 80, 0.1);
+.name-scribble path {
+  fill: none;
+  stroke: var(--zest);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: scribble-in 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.25s both;
 }
 
-.shimmer {
-  background: linear-gradient(
-    135deg,
-    rgba(194, 230, 80, 0.15) 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(194, 230, 80, 0.1) 100%
-  );
+@keyframes scribble-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── stickers: art placed by hand ── */
+
+.sticker {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.08));
+}
+
+/* ── name label (like a laminated school label) ── */
+
+.name-label {
+  background: #fff;
+  border: 1px solid var(--charcoal);
+  border-radius: 8px;
+  font-family: var(--font-geist);
+  font-size: 12px;
+  color: var(--charcoal);
+}
+
+.name-label .fill {
+  font-family: var(--font-fraunces);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--graham);
+  border-bottom: 1px dashed rgba(23, 23, 23, 0.35);
+  flex: 1;
+  line-height: 1.1;
+  padding-left: 6px;
+}
+
+/* ── footer: a slice of pie in cross-section ── */
+
+.pie-band {
+  position: relative;
+  background: var(--filling);
+  border-radius: 56px 56px 0 0;
+}
+
+/* whipped-cream scallops riding the top edge */
+.pie-band::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  top: -18px;
+  height: 36px;
+  background:
+    radial-gradient(circle at 18px 18px, var(--cream) 17px, transparent 18px) 0 0 / 36px 36px repeat-x;
+  filter: drop-shadow(0 1.5px 0 rgba(23, 23, 23, 0.85));
+}
+
+.crust {
+  background: var(--crust);
+  background-image: radial-gradient(rgba(58, 37, 16, 0.14) 1.2px, transparent 1.4px);
+  background-size: 9px 9px;
+  border-top: 1.5px solid var(--charcoal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pill,
+  .wiggle {
+    transition: none !important;
+  }
+  .name-scribble path {
+    animation: none;
+  }
 }
