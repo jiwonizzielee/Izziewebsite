@@ -419,7 +419,7 @@ a:focus-visible {
   --read: 0;
   --ink: 0;
   position: relative;
-  height: 380vh;
+  height: 260vh;
   background: var(--rind);
 }
 
