@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, MouseEvent as ReactMouseEvent } from 'react'
 
 // Project images
 import brainTumorImg from './imports/extraordinary-vintage-brain-icon-pink-isolated-transparent-background-genuine-png.png'
@@ -215,6 +215,182 @@ function ScrollWords({ text, mark }: { text: string; mark?: string }) {
   )
 }
 
+const PIE_SIZE = 560
+
+type Crumb = { id: number; x: number; y: number; dx: number; dy: number; s: number }
+
+/** Tap the slice to take a bite. Crumbs fly, the slice shrinks, and eventually it is gone. */
+function PieBites() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const imgRef = useRef<HTMLImageElement | null>(null)
+  const baseRef = useRef(1)
+  const crumbId = useRef(0)
+  const [bites, setBites] = useState(0)
+  const [gone, setGone] = useState(false)
+  const [crumbs, setCrumbs] = useState<Crumb[]>([])
+
+  const opaquePixels = (ctx: CanvasRenderingContext2D) => {
+    const d = ctx.getImageData(0, 0, PIE_SIZE, PIE_SIZE).data
+    let n = 0
+    for (let i = 3; i < d.length; i += 16) if (d[i] > 40) n++
+    return n
+  }
+
+  const draw = () => {
+    const c = canvasRef.current
+    const im = imgRef.current
+    const ctx = c?.getContext('2d', { willReadFrequently: true })
+    if (!c || !im || !ctx) return
+    ctx.clearRect(0, 0, PIE_SIZE, PIE_SIZE)
+    ctx.drawImage(im, 0, 0, PIE_SIZE, PIE_SIZE)
+    baseRef.current = Math.max(1, opaquePixels(ctx))
+  }
+
+  useEffect(() => {
+    const im = new Image()
+    im.onload = () => {
+      imgRef.current = im
+      draw()
+    }
+    im.src = pieImg
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const bite = (x: number, y: number) => {
+    const c = canvasRef.current
+    const ctx = c?.getContext('2d', { willReadFrequently: true })
+    if (!c || !ctx || gone) return false
+    if (x < 0 || y < 0 || x >= PIE_SIZE || y >= PIE_SIZE) return false
+    if (ctx.getImageData(Math.round(x), Math.round(y), 1, 1).data[3] < 30) return false
+
+    const R = PIE_SIZE * 0.1
+    ctx.save()
+    ctx.globalCompositeOperation = 'destination-out'
+    ctx.beginPath()
+    ctx.arc(x, y, R, 0, Math.PI * 2)
+    ctx.fill()
+    // scalloped rim, like teeth marks
+    const a0 = Math.random() * Math.PI * 2
+    for (let k = 0; k < 6; k++) {
+      const a = a0 + k * ((Math.PI * 2) / 6) + (Math.random() - 0.5) * 0.4
+      ctx.beginPath()
+      ctx.arc(x + Math.cos(a) * R * 0.95, y + Math.sin(a) * R * 0.95, R * (0.3 + Math.random() * 0.15), 0, Math.PI * 2)
+      ctx.fill()
+    }
+    ctx.restore()
+
+    const fresh: Crumb[] = Array.from({ length: 7 }, () => ({
+      id: crumbId.current++,
+      x: (x / PIE_SIZE) * 100,
+      y: (y / PIE_SIZE) * 100,
+      dx: (Math.random() - 0.5) * 90,
+      dy: 20 + Math.random() * 60,
+      s: 3 + Math.random() * 4,
+    }))
+    setCrumbs((cs) => [...cs, ...fresh])
+    window.setTimeout(() => setCrumbs((cs) => cs.filter((c2) => !fresh.includes(c2))), 900)
+
+    setBites((n) => n + 1)
+    if (opaquePixels(ctx) < baseRef.current * 0.08) {
+      ctx.clearRect(0, 0, PIE_SIZE, PIE_SIZE)
+      setGone(true)
+    }
+    return true
+  }
+
+  const randomBite = () => {
+    for (let i = 0; i < 80; i++) {
+      if (bite(PIE_SIZE * (0.12 + Math.random() * 0.76), PIE_SIZE * (0.12 + Math.random() * 0.76))) return
+    }
+  }
+
+  const onTap = (e: ReactMouseEvent<HTMLDivElement>) => {
+    const c = canvasRef.current
+    if (!c) return
+    const r = c.getBoundingClientRect()
+    bite(((e.clientX - r.left) / r.width) * PIE_SIZE, ((e.clientY - r.top) / r.height) * PIE_SIZE)
+  }
+
+  const reset = () => {
+    draw()
+    setBites(0)
+    setGone(false)
+    setCrumbs([])
+  }
+
+  return (
+    <div className="pie-cutter">
+      <div
+        className="pie-stage"
+        role="button"
+        tabIndex={0}
+        aria-label="Take a bite out of the key lime pie"
+        onClick={onTap}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            randomBite()
+          }
+        }}
+      >
+        <canvas ref={canvasRef} width={PIE_SIZE} height={PIE_SIZE} className="pie-canvas" aria-hidden="true" />
+        {crumbs.map((c) => (
+          <span
+            key={c.id}
+            className="crumb"
+            aria-hidden="true"
+            style={{ left: `${c.x}%`, top: `${c.y}%`, width: c.s, height: c.s, '--dx': `${c.dx}px`, '--dy': `${c.dy}px` } as CSSProperties}
+          />
+        ))}
+      </div>
+      <div className="pie-actions">
+        <p className="ui text-sm text-graham" aria-live="polite">
+          {gone ? 'All gone. Bake another?' : bites === 0 ? 'Tap the pie to take a bite.' : `${bites} ${bites === 1 ? 'bite' : 'bites'} so far.`}
+        </p>
+        <div className="flex items-center gap-2">
+          {!gone && (
+            <button type="button" className="pill" onClick={randomBite}>
+              Take a bite
+            </button>
+          )}
+          {bites > 0 && (
+            <button type="button" className="pill" onClick={reset}>
+              Bake another
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const DRIFT = [
+  { x: '6%', s: '64px', t: '15s', d: '3.4s', r: '70deg' },
+  { x: '19%', s: '38px', t: '12s', d: '5.2s', r: '-90deg' },
+  { x: '33%', s: '84px', t: '18s', d: '4.1s', r: '55deg' },
+  { x: '52%', s: '46px', t: '13s', d: '6.5s', r: '-60deg' },
+  { x: '66%', s: '72px', t: '16s', d: '3.9s', r: '80deg' },
+  { x: '79%', s: '40px', t: '11s', d: '5.8s', r: '-100deg' },
+  { x: '91%', s: '58px', t: '14s', d: '4.6s', r: '65deg' },
+]
+
+/** Lime slices float up through the hero on a slow loop. */
+function LimeDrift() {
+  return (
+    <div className="lime-drift" aria-hidden="true">
+      {DRIFT.map((d, i) => (
+        <img
+          key={i}
+          src={limeSliceImg}
+          alt=""
+          draggable={false}
+          style={{ '--x': d.x, '--s': d.s, '--t': d.t, '--d': d.d, '--r': d.r } as CSSProperties}
+        />
+      ))}
+    </div>
+  )
+}
+
 function SectionHeader({ title, note, id }: { title: string; note?: string; id?: string }) {
   return (
     <div className="flex flex-wrap items-end gap-x-5 gap-y-1 mb-12">
@@ -311,7 +487,7 @@ export default function App() {
         Skip to content
       </a>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
           borderBottom: scrolled || menuOpen ? '1px solid var(--hairline)' : '1px solid transparent',
           background: scrolled || menuOpen ? 'rgba(253,251,243,0.95)' : 'transparent',
@@ -381,6 +557,8 @@ export default function App() {
             </span>
           </div>
 
+          <LimeDrift />
+
           <div className="hero-cluster">
             <div className="hero-cluster-inner">
               <p className="ui text-[15px] text-muted">Cornell University · Information Science</p>
@@ -400,7 +578,9 @@ export default function App() {
             </div>
           </div>
 
-          <Wordmark />
+          <div className="wm-rise">
+            <Wordmark />
+          </div>
         </section>
 
         {/* ── Scene: lime filling floods the screen, then the card reads itself ── */}
@@ -414,28 +594,7 @@ export default function App() {
 
             <div className="scene-card">
               <div className="scene-photo">
-                <div className="card p-3 pb-4" style={{ transform: 'rotate(3deg)', background: '#fff' }}>
-                  <img src={profileImg} alt="Izzie Lee" className="photo" />
-                </div>
-
-                {/* name label sticker */}
-                <div
-                  className="name-label absolute p-3 pr-4 w-[200px] space-y-1.5"
-                  style={{ left: -26, bottom: -34, transform: 'rotate(-5deg)', boxShadow: 'var(--shadow-card)' }}
-                >
-                  <div className="flex items-end gap-1">
-                    <span>Name</span>
-                    <span className="fill">Izzie Lee</span>
-                  </div>
-                  <div className="flex items-end gap-1">
-                    <span>Major</span>
-                    <span className="fill">Info Sci</span>
-                  </div>
-                </div>
-
-                <Sticker src={pieImg} size={120} rotate={14} style={{ right: -48, top: -50 }} />
-                <Sticker src={limeSliceImg} size={74} rotate={-18} style={{ right: -30, bottom: 70 }} />
-                <Sticker src={limeSliceImg} size={46} rotate={30} style={{ left: -34, top: '42%' }} />
+                <img src={profileImg} alt="Izzie Lee" className="photo" />
               </div>
               <ScrollWords text={INTRO} mark="actually" />
             </div>
@@ -446,15 +605,12 @@ export default function App() {
         <section id="about" data-nav="about" style={{ background: 'var(--custard)' }}>
           <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-24 md:py-28 grid md:grid-cols-[0.85fr_1.2fr] gap-16 md:gap-20 items-start">
             <div className="relative max-w-[380px] mx-auto md:mx-0 w-full">
-              <div className="card p-3" style={{ transform: 'rotate(-2.5deg)', background: '#fff' }}>
-                <img
-                  src={googleImg}
-                  alt="Izzie Lee at Google"
-                  className="w-full block"
-                  style={{ height: 400, objectFit: 'cover', objectPosition: 'center top', borderRadius: 6 }}
-                />
-              </div>
-              <Sticker src={limeSliceImg} size={64} rotate={22} style={{ left: -26, bottom: -20 }} />
+              <img
+                src={googleImg}
+                alt="Izzie Lee at Google"
+                className="w-full block photo-plain"
+                style={{ height: 420, objectFit: 'cover', objectPosition: 'center top' }}
+              />
             </div>
 
             <div>
@@ -636,11 +792,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="relative w-64 h-64 hidden md:block" aria-hidden="true">
-            <Sticker src={pieImg} size={210} rotate={-10} style={{ top: 10, left: 20 }} />
-            <Sticker src={limeSliceImg} size={80} rotate={25} style={{ top: -10, right: -20 }} />
-            <Sticker src={limeSliceImg} size={56} rotate={-30} style={{ bottom: 0, left: -10 }} />
-          </div>
+          <PieBites />
         </div>
 
         <div className="crust">
