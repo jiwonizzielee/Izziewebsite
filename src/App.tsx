@@ -178,11 +178,11 @@ function Sticker({ src, size, rotate, style }: { src: string; size: number; rota
 }
 
 /** Giant name, letters rise out of a mask on load. */
-function Wordmark() {
+function Wordmark({ ready }: { ready: boolean }) {
   let n = 0
   const words = ['Izzie', 'Lee'].map((w) => ({ w, chars: [...w].map((ch) => ({ ch, k: n++ })) }))
   return (
-    <h1 className="wordmark" aria-label="Izzie Lee">
+    <h1 className={ready ? 'wordmark go' : 'wordmark'} aria-label="Izzie Lee">
       {words.map(({ w, chars }) => (
         <span key={w} className="wm-word" aria-hidden="true">
           {chars.map(({ ch, k }) => (
@@ -382,6 +382,8 @@ function SectionHeader({ title, note, id }: { title: string; note?: string; id?:
 export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [onDark, setOnDark] = useState(true)
+  const [fontsReady, setFontsReady] = useState(false)
+  const startRef = useRef(0)
   const wmRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLHeadingElement>(null)
@@ -389,6 +391,25 @@ export default function App() {
   const timelineRef = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [active, setActive] = useState('')
+
+  // Wait for the display font so the letters never rise in a fallback face and then jump.
+  useEffect(() => {
+    let done = false
+    const go = () => {
+      if (done) return
+      done = true
+      startRef.current = performance.now()
+      setFontsReady(true)
+    }
+    const timer = window.setTimeout(go, 1500)
+    const fonts = document.fonts
+    if (fonts && fonts.load) {
+      fonts.load("600 100px 'Fraunces'").then(go, go)
+    } else {
+      go()
+    }
+    return () => window.clearTimeout(timer)
+  }, [])
 
   // Mark the nav link for the section currently in view
   useEffect(() => {
@@ -424,7 +445,6 @@ export default function App() {
     // Any scroll, tap or key press jumps straight to the end.
     const START = 1000
     const LENGTH = 1800
-    const t0 = performance.now()
     let intro = reduce || window.scrollY > 40 ? 1 : 0
     let skipAt = 0
     let skipFrom = 0
@@ -444,7 +464,9 @@ export default function App() {
       if (intro < 1) {
         intro = skipAt
           ? skipFrom + (1 - skipFrom) * clamp((now - skipAt) / 450)
-          : clamp((now - t0 - START) / LENGTH)
+          : startRef.current
+            ? clamp((now - startRef.current - START) / LENGTH)
+            : 0
       }
 
       const scene = sceneRef.current
@@ -476,6 +498,7 @@ export default function App() {
           const y0 = (sr.height - h) / 2
           const sc = 1 + (s1 - 1) * move
           wm.style.transform = `translate(${(x0 + (x1 - x0) * move).toFixed(1)}px, ${(y0 + (y1 - y0) * move).toFixed(1)}px) scale(${sc.toFixed(4)})`
+          wm.style.visibility = 'visible'
         }
       }
 
@@ -519,7 +542,7 @@ export default function App() {
         Skip to content
       </a>
       <header
-        className={`site-header ${solid ? '' : 'on-dark'} fixed top-0 left-0 right-0 z-50 transition-all duration-300`}
+        className={`site-header ${onDark && !menuOpen ? 'on-dark' : ''} fixed top-0 left-0 right-0 z-50 transition-all duration-300`}
         style={{
           borderBottom: solid ? '1px solid var(--hairline)' : '1px solid transparent',
           background: solid ? 'rgba(253,251,243,0.95)' : 'transparent',
@@ -597,7 +620,7 @@ export default function App() {
             </div>
 
             <div ref={wmRef} className="wm-wrap">
-              <Wordmark />
+              <Wordmark ready={fontsReady} />
             </div>
           </div>
         </section>
