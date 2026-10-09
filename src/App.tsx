@@ -28,7 +28,7 @@ const GITHUB = 'https://github.com/jiwonizzielee'
 const PHONE = '347-454-8933'
 
 const INTRO =
-  'I study Information Science at Cornell, focusing on data science with a minor in computer science. I love building at the intersection of software development, human-centered technology, and product management to create experiences people actually want to use.'
+  'I\'m a student at Cornell and a developer focusing on data science, with a deep interest in human-centered design. I love building at the intersection of software development and product management to create experiences people actually want to use.'
 
 const PROJECTS = [
   {
