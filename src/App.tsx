@@ -616,6 +616,7 @@ export default function App() {
                   Izzie Lee
                 </h2>
                 <ScrollWords text={INTRO} />
+                <p className="scene-tagline display">I build technology with people in mind.</p>
               </div>
             </div>
 
@@ -623,11 +624,6 @@ export default function App() {
               <Wordmark ready={fontsReady} />
             </div>
           </div>
-        </section>
-
-        {/* ── Punch line ── */}
-        <section className="punchline" aria-label="Tagline">
-          <p className="display">I build technology with people in mind.</p>
         </section>
 
         {/* ── About ── */}
@@ -646,13 +642,10 @@ export default function App() {
               <SectionHeader title="About" />
               <div className="space-y-5 text-lg md:text-[19px] leading-[1.65] text-graham max-w-[62ch]">
                 <p>
-                  My work spans agentic AI, data analytics, product management, and <span className="marker">human-centered interaction</span>.
+                  Currently, I’m conducting HCI research at Emory University, examining racial bias in LLM-generated recommendation letters. This past summer, I worked on a five-person team at Google to build an AI-powered travel booking agent, contributing to both product strategy and engineering. Previously, I researched navigation challenges faced by blind and low-vision users to help develop more accessible technology.
                 </p>
                 <p>
-                  Currently, I'm conducting HCI research at Emory on racial bias in LLM-generated recommendation letters. This past summer, I led a team of five interns at Google to build an AI-powered travel booking agent on the Google Cloud team, working across product management and engineering. Before that, I worked on navigation technology for blind and low-vision users.
-                </p>
-                <p>
-                  Outside of tech, I'm passionate about social impact and entrepreneurship. I co-founded Sightshare, an <span className="marker">eye health nonprofit</span> operating across five states that has raised over $5,000 to support eye care initiatives in Ghana and Morocco.
+                  Outside of tech, I’m passionate about social impact and entrepreneurship. I co-founded Sightshare, an <span className="marker">eye health nonprofit</span> that has collaborated with over 35 schools across five states and raised more than $5,000 to support eye care initiatives in Ghana and Morocco.
                 </p>
               </div>
 
