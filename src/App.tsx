@@ -418,8 +418,8 @@ export default function App() {
 
     // The opening plays by itself: letters rise, the lime iris opens, the name settles.
     // Any scroll, tap or key press jumps straight to the end.
-    const START = 1500
-    const LENGTH = 2600
+    const START = 1000
+    const LENGTH = 1800
     const t0 = performance.now()
     let intro = reduce || window.scrollY > 40 ? 1 : 0
     let skipAt = 0
