@@ -782,3 +782,18 @@ a:focus-visible {
     display: none;
   }
 }
+
+/* Punch line band between the opening and About */
+.punchline {
+  background: var(--cream);
+  padding: clamp(56px, 10vw, 120px) clamp(16px, 4vw, 32px);
+  text-align: center;
+}
+.punchline p {
+  margin: 0 auto;
+  max-width: 18ch;
+  font-size: clamp(2.2rem, 6.4vw, 4.75rem);
+  line-height: 1.05;
+  color: var(--graham);
+  text-wrap: balance;
+}
