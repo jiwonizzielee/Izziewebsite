@@ -28,7 +28,7 @@ const GITHUB = 'https://github.com/jiwonizzielee'
 const PHONE = '347-454-8933'
 
 const INTRO =
-  'I\'m a student at Cornell and a developer focusing on data science, with a deep interest in human-centered design. I love building at the intersection of software development and product management to create experiences people actually want to use.'
+  'I\u2019m a student at Cornell University passionate about building products at the intersection of AI, data, and human-centered design. I turn complex problems into intuitive, meaningful experiences.'
 
 const PROJECTS = [
   {
@@ -615,7 +615,7 @@ export default function App() {
                 <h2 ref={nameRef} className="scene-name" aria-hidden="true">
                   Izzie Lee
                 </h2>
-                <ScrollWords text={INTRO} mark="actually" />
+                <ScrollWords text={INTRO} />
               </div>
             </div>
 
@@ -623,6 +623,11 @@ export default function App() {
               <Wordmark ready={fontsReady} />
             </div>
           </div>
+        </section>
+
+        {/* ── Punch line ── */}
+        <section className="punchline" aria-label="Tagline">
+          <p className="display">I build technology with people in mind.</p>
         </section>
 
         {/* ── About ── */}
