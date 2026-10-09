@@ -339,6 +339,7 @@ a:focus-visible {
   top: 0;
   z-index: 3;
   transform-origin: 0 0;
+  visibility: hidden; /* shown by script after it has placed the name */
   transform: translate(8vw, 30svh);
   will-change: transform;
   pointer-events: none;
@@ -374,6 +375,10 @@ a:focus-visible {
 .wm-in {
   display: block;
   transform: translateY(120%);
+}
+
+/* letters only start once the display font has loaded, so nothing jumps */
+.wordmark.go .wm-in {
   animation: letter-up 800ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
   animation-delay: calc(100ms + var(--k, 0) * 50ms);
 }
@@ -706,12 +711,17 @@ a:focus-visible {
     scroll-behavior: auto;
   }
   .wm-in,
+  .wordmark.go .wm-in,
   .site-header,
   .scroll-cue {
     animation: none;
   }
-  .wm-in {
+  .wm-in,
+  .wordmark.go .wm-in {
     transform: none;
+  }
+  .wm-wrap {
+    visibility: visible;
   }
   .pill,
   .proj {
