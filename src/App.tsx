@@ -308,7 +308,16 @@ function PieBites() {
     const c = canvasRef.current
     if (!c) return
     const r = c.getBoundingClientRect()
-    bite(((e.clientX - r.left) / r.width) * PIE_SIZE, ((e.clientY - r.top) / r.height) * PIE_SIZE)
+    const x = ((e.clientX - r.left) / r.width) * PIE_SIZE
+    const y = ((e.clientY - r.top) / r.height) * PIE_SIZE
+    if (bite(x, y)) return
+    // a tap just beside the crust still takes a bite from the nearest part of the slice
+    for (let d = 14; d <= 100; d += 14) {
+      for (let k = 0; k < 12; k++) {
+        const ang = (k * Math.PI) / 6
+        if (bite(x + Math.cos(ang) * d, y + Math.sin(ang) * d)) return
+      }
+    }
   }
 
   const reset = () => {
@@ -348,11 +357,6 @@ function PieBites() {
           {gone ? 'All gone. Bake another?' : bites === 0 ? 'Tap the pie to take a bite.' : `${bites} ${bites === 1 ? 'bite' : 'bites'} so far.`}
         </p>
         <div className="flex items-center gap-2">
-          {!gone && (
-            <button type="button" className="pill" onClick={randomBite}>
-              Take a bite
-            </button>
-          )}
           {bites > 0 && (
             <button type="button" className="pill" onClick={reset}>
               Bake another
