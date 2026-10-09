@@ -612,11 +612,15 @@ export default function App() {
                 <img src={profileImg} alt="Izzie Lee" className="photo" />
               </div>
               <div>
-                <h2 ref={nameRef} className="scene-name" aria-hidden="true">
-                  Izzie Lee
-                </h2>
+                <div className="scene-head">
+                  <h2 ref={nameRef} className="scene-name" aria-hidden="true">
+                    Izzie Lee
+                  </h2>
+                  <div className="speech">
+                    <p className="display">I build technology with people in mind.</p>
+                  </div>
+                </div>
                 <ScrollWords text={INTRO} />
-                <p className="scene-tagline display">I build technology with people in mind.</p>
               </div>
             </div>
 
