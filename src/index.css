@@ -778,22 +778,19 @@ a:focus-visible {
   .sw {
     opacity: 1;
   }
+  .scene-tagline {
+    opacity: 1;
+  }
   .crumb {
     display: none;
   }
 }
 
-/* Punch line band between the opening and About */
-.punchline {
-  background: var(--cream);
-  padding: clamp(56px, 10vw, 120px) clamp(16px, 4vw, 32px);
-  text-align: center;
-}
-.punchline p {
-  margin: 0 auto;
-  max-width: 18ch;
-  font-size: clamp(2.2rem, 6.4vw, 4.75rem);
-  line-height: 1.05;
-  color: var(--graham);
-  text-wrap: balance;
+/* Tagline under the intro, fades in as the words finish */
+.scene-tagline {
+  margin: 0.9em 0 0;
+  font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+  line-height: 1.2;
+  color: var(--zest-deep);
+  opacity: clamp(0, calc((var(--read) - 0.8) * 5), 1);
 }
