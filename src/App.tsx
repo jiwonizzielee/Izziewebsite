@@ -416,24 +416,45 @@ export default function App() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let raf = 0
 
+    // The opening plays by itself: letters rise, the lime iris opens, the name settles.
+    // Any scroll, tap or key press jumps straight to the end.
+    const START = 1500
+    const LENGTH = 2600
+    const t0 = performance.now()
+    let intro = reduce || window.scrollY > 40 ? 1 : 0
+    let skipAt = 0
+    let skipFrom = 0
+    const skip = () => {
+      if (intro >= 1 || skipAt) return
+      skipAt = performance.now()
+      skipFrom = intro
+    }
+
     const update = () => {
       raf = 0
       const vh = window.innerHeight
       setScrolled(window.scrollY > 40)
       if (reduce) return
 
+      const now = performance.now()
+      if (intro < 1) {
+        intro = skipAt
+          ? skipFrom + (1 - skipFrom) * clamp((now - skipAt) / 450)
+          : clamp((now - t0 - START) / LENGTH)
+      }
+
       const scene = sceneRef.current
       if (scene) {
         const r = scene.getBoundingClientRect()
         const p = clamp(-r.top / Math.max(1, r.height - vh))
-        const iris = easeInOut(clamp((p - 0.04) / 0.4))
-        const card = clamp((p - 0.5) / 0.18)
-        const move = easeInOut(clamp((p - 0.34) / 0.3))
+        const iris = easeInOut(clamp(intro / 0.6))
+        const card = clamp((intro - 0.7) / 0.3)
+        const move = easeInOut(clamp((intro - 0.3) / 0.7))
         scene.style.setProperty('--iris', iris.toFixed(4))
         scene.style.setProperty('--card', card.toFixed(4))
-        scene.style.setProperty('--read', clamp((p - 0.64) / 0.3).toFixed(4))
+        scene.style.setProperty('--read', intro >= 1 ? clamp(p / 0.85).toFixed(4) : '0')
         scene.style.setProperty('--ink', clamp(iris * 2).toFixed(4))
-        setOnDark(p < 0.2)
+        setOnDark(intro < 0.3)
 
         // The big name glides and shrinks into the small heading above the intro.
         const wm = wmRef.current
@@ -462,13 +483,22 @@ export default function App() {
     }
 
     const onScroll = () => {
+      if (window.scrollY > 8) skip()
       if (!raf) raf = requestAnimationFrame(update)
     }
 
-    update()
+    const loop = () => {
+      update()
+      if (intro < 1) raf = requestAnimationFrame(loop)
+    }
+
+    loop()
+    const events = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const
+    events.forEach((e) => window.addEventListener(e, skip, { passive: true }))
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
     return () => {
+      events.forEach((e) => window.removeEventListener(e, skip))
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
       if (raf) cancelAnimationFrame(raf)
@@ -565,9 +595,6 @@ export default function App() {
             <div ref={wmRef} className="wm-wrap">
               <Wordmark />
             </div>
-            <p className="scroll-cue" aria-hidden="true">
-              Scroll
-            </p>
           </div>
         </section>
 
