@@ -364,33 +364,6 @@ function PieBites() {
   )
 }
 
-const DRIFT = [
-  { x: '6%', s: '64px', t: '15s', d: '3.4s', r: '70deg' },
-  { x: '19%', s: '38px', t: '12s', d: '5.2s', r: '-90deg' },
-  { x: '33%', s: '84px', t: '18s', d: '4.1s', r: '55deg' },
-  { x: '52%', s: '46px', t: '13s', d: '6.5s', r: '-60deg' },
-  { x: '66%', s: '72px', t: '16s', d: '3.9s', r: '80deg' },
-  { x: '79%', s: '40px', t: '11s', d: '5.8s', r: '-100deg' },
-  { x: '91%', s: '58px', t: '14s', d: '4.6s', r: '65deg' },
-]
-
-/** Lime slices float up through the hero on a slow loop. */
-function LimeDrift() {
-  return (
-    <div className="lime-drift" aria-hidden="true">
-      {DRIFT.map((d, i) => (
-        <img
-          key={i}
-          src={limeSliceImg}
-          alt=""
-          draggable={false}
-          style={{ '--x': d.x, '--s': d.s, '--t': d.t, '--d': d.d, '--r': d.r } as CSSProperties}
-        />
-      ))}
-    </div>
-  )
-}
-
 function SectionHeader({ title, note, id }: { title: string; note?: string; id?: string }) {
   return (
     <div className="flex flex-wrap items-end gap-x-5 gap-y-1 mb-12">
@@ -404,7 +377,10 @@ function SectionHeader({ title, note, id }: { title: string; note?: string; id?:
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false)
-  const heroRef = useRef<HTMLElement>(null)
+  const [onDark, setOnDark] = useState(true)
+  const wmRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLHeadingElement>(null)
   const sceneRef = useRef<HTMLElement>(null)
   const timelineRef = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -446,16 +422,36 @@ export default function App() {
       setScrolled(window.scrollY > 40)
       if (reduce) return
 
-      const hero = heroRef.current
-      if (hero) hero.style.setProperty('--hy', clamp(window.scrollY / vh).toFixed(4))
-
       const scene = sceneRef.current
       if (scene) {
         const r = scene.getBoundingClientRect()
         const p = clamp(-r.top / Math.max(1, r.height - vh))
-        scene.style.setProperty('--iris', easeInOut(clamp(p / 0.5)).toFixed(4))
-        scene.style.setProperty('--card', clamp((p - 0.18) / 0.3).toFixed(4))
-        scene.style.setProperty('--read', clamp((p - 0.4) / 0.5).toFixed(4))
+        const iris = easeInOut(clamp((p - 0.04) / 0.4))
+        const card = clamp((p - 0.5) / 0.18)
+        const move = easeInOut(clamp((p - 0.34) / 0.3))
+        scene.style.setProperty('--iris', iris.toFixed(4))
+        scene.style.setProperty('--card', card.toFixed(4))
+        scene.style.setProperty('--read', clamp((p - 0.64) / 0.3).toFixed(4))
+        scene.style.setProperty('--ink', clamp(iris * 2).toFixed(4))
+        setOnDark(p < 0.2)
+
+        // The big name glides and shrinks into the small heading above the intro.
+        const wm = wmRef.current
+        const stage = stageRef.current
+        const name = nameRef.current
+        if (wm && stage && name) {
+          const sr = stage.getBoundingClientRect()
+          const hr = name.getBoundingClientRect()
+          const w = wm.offsetWidth
+          const h = wm.offsetHeight
+          const s1 = hr.width / Math.max(1, w)
+          const x1 = hr.left - sr.left
+          const y1 = hr.top - sr.top - (1 - card) * 56 + hr.height / 2 - (h * s1) / 2
+          const x0 = (sr.width - w) / 2
+          const y0 = (sr.height - h) / 2
+          const sc = 1 + (s1 - 1) * move
+          wm.style.transform = `translate(${(x0 + (x1 - x0) * move).toFixed(1)}px, ${(y0 + (y1 - y0) * move).toFixed(1)}px) scale(${sc.toFixed(4)})`
+        }
       }
 
       const tl = timelineRef.current
@@ -479,6 +475,8 @@ export default function App() {
     }
   }, [])
 
+  const solid = menuOpen || (scrolled && !onDark)
+
   return (
     // overflow-x-clip (not hidden) so the pinned scene's position: sticky keeps working
     <div className="min-h-screen overflow-x-clip" style={{ background: 'var(--cream)' }}>
@@ -487,11 +485,11 @@ export default function App() {
         Skip to content
       </a>
       <header
-        className="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className={`site-header ${solid ? '' : 'on-dark'} fixed top-0 left-0 right-0 z-50 transition-all duration-300`}
         style={{
-          borderBottom: scrolled || menuOpen ? '1px solid var(--hairline)' : '1px solid transparent',
-          background: scrolled || menuOpen ? 'rgba(253,251,243,0.95)' : 'transparent',
-          backdropFilter: scrolled || menuOpen ? 'blur(10px)' : 'none',
+          borderBottom: solid ? '1px solid var(--hairline)' : '1px solid transparent',
+          background: solid ? 'rgba(253,251,243,0.95)' : 'transparent',
+          backdropFilter: solid ? 'blur(10px)' : 'none',
         }}
       >
         <nav aria-label="Main" className="max-w-[1200px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
@@ -544,49 +542,9 @@ export default function App() {
       </header>
 
       <main id="main" tabIndex={-1} className="outline-none">
-        {/* ── Hero: giant cropped name, lime wheels roll in from the corners ── */}
-        <section ref={heroRef} className="hero" data-nav="home">
-          <div className="hero-wheel left" aria-hidden="true">
-            <span className="wheel-in" style={{ '--fx': '-40%' } as CSSProperties}>
-              <img src={limeSliceImg} alt="" className="lime-img" draggable={false} />
-            </span>
-          </div>
-          <div className="hero-wheel right" aria-hidden="true">
-            <span className="wheel-in">
-              <img src={limeSliceImg} alt="" className="lime-img" draggable={false} />
-            </span>
-          </div>
-
-          <LimeDrift />
-
-          <div className="hero-cluster">
-            <div className="hero-cluster-inner">
-              <p className="ui text-[15px] text-muted">Cornell University · Information Science</p>
-              <p className="hero-statement">Software, data and research, designed around the people who use them.</p>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <a href={`mailto:${EMAIL}`} className="pill pill-solid">
-                  Email me →
-                </a>
-                <a href={LINKEDIN} target="_blank" rel="noreferrer" className="pill">
-                  LinkedIn ↗
-                </a>
-                <a href={GITHUB} target="_blank" rel="noreferrer" className="pill">
-                  GitHub ↗
-                </a>
-              </div>
-              <p className="ui text-sm mt-5 text-muted">Currently doing HCI research at Emory · Open to internships</p>
-            </div>
-          </div>
-
-          <div className="wm-rise">
-            <Wordmark />
-          </div>
-        </section>
-
-        {/* ── Scene: lime filling floods the screen, then the card reads itself ── */}
+        {/* ── Opening: the name on dark green, a lime iris opens, and the name settles above the intro ── */}
         <section ref={sceneRef} className="scene" data-nav="home">
-          <div className="scene-stage">
-            <h2 className="sr-only">Introduction</h2>
+          <div ref={stageRef} className="scene-stage">
             <div className="scene-fill" aria-hidden="true">
               <img src={limeSliceImg} alt="" className="scene-wheel a" draggable={false} />
               <img src={limeSliceImg} alt="" className="scene-wheel b" draggable={false} />
@@ -596,8 +554,20 @@ export default function App() {
               <div className="scene-photo">
                 <img src={profileImg} alt="Izzie Lee" className="photo" />
               </div>
-              <ScrollWords text={INTRO} mark="actually" />
+              <div>
+                <h2 ref={nameRef} className="scene-name" aria-hidden="true">
+                  Izzie Lee
+                </h2>
+                <ScrollWords text={INTRO} mark="actually" />
+              </div>
             </div>
+
+            <div ref={wmRef} className="wm-wrap">
+              <Wordmark />
+            </div>
+            <p className="scroll-cue" aria-hidden="true">
+              Scroll
+            </p>
           </div>
         </section>
 
