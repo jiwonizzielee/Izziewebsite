@@ -568,7 +568,7 @@ export default function App() {
             </a>
             <button
               type="button"
-              className="pill md:hidden"
+              className="pill menu-btn"
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               onClick={() => setMenuOpen((o) => !o)}
