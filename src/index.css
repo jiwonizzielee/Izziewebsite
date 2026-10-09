@@ -171,6 +171,13 @@ a:focus-visible {
   text-decoration-color: var(--zest);
 }
 
+/* the Menu button is only for narrow screens */
+@media (min-width: 768px) {
+  .menu-btn {
+    display: none;
+  }
+}
+
 .mobile-menu {
   padding: 4px 16px 20px;
   background: var(--cream);
